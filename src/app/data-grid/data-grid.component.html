@@ -1,0 +1,32 @@
+<h3> Data Grid </h3>
+
+<kendo-grid [kendoGridBinding]="gridView" kendoGridSelectBy="id" [(selectedKeys)]="mySelection" [pageSize]="20"
+    [pageable]="true" [sortable]="true" [resizable]="false" [height]="500" [columnMenu]="{ filter: true }">
+    <kendo-grid-checkbox-column [width]="45" [headerClass]="{'text-center': true}" [class]="{'text-center': true}"
+        [columnMenu]="false" [showSelectAll]="true"></kendo-grid-checkbox-column>
+    <kendo-grid-column field="full_name" title="Contact Name" [width]="220" [sortable]="false" [columnMenu]="false">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            {{ dataItem.full_name }}
+        </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column field="job_title" title="Job Title" [width]="220">
+    </kendo-grid-column>
+    <kendo-grid-column field="target" title="Engagement" [width]="230" [resizable]="false" filter="numeric"
+        [columnMenu]="false">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <kendo-sparkline type="bar" [data]="dataItem.target" [tooltip]="{visible: true}" [transitions]="true"
+                [seriesDefaults]="{labels: {background: 'none', visible: false, format: '{0}%'}}">
+                <kendo-chart-area [opacity]="0" [width]="200"></kendo-chart-area>
+                <kendo-chart-value-axis>
+                    <kendo-chart-value-axis-item [min]="0" [max]="130">
+                    </kendo-chart-value-axis-item>
+                </kendo-chart-value-axis>
+            </kendo-sparkline>
+        </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column field="budget" title="Budget" [width]="100" filter="numeric">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <span [ngClass]="{'red text-bold': dataItem.budget < 0}">{{ dataItem.budget }}</span>
+        </ng-template>
+    </kendo-grid-column> 
+</kendo-grid>
